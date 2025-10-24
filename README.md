@@ -74,3 +74,6 @@ Perfect for:
 ## 🎬 Enjoy the Quiz!
 
 Have fun testing your movie knowledge! May the trivia be with you! ⭐
+
+---
+*Last updated: October 2025*
