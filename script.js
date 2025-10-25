@@ -5,151 +5,223 @@
 const movieQuestions = {
     easy: [
         {
-            question: "Which movie features the famous line 'May the Force be with you'?",
-            options: ["Star Trek", "Star Wars", "Stargate", "Star Lord"],
+            question: "Which superhero movie features the character Tony Stark?",
+            options: ["Batman", "Iron Man", "Superman", "Spider-Man"],
             correct: 1,
             category: "Hollywood"
         },
         {
-            question: "Who played the character of Jack in 'Titanic'?",
-            options: ["Brad Pitt", "Leonardo DiCaprio", "Tom Cruise", "Johnny Depp"],
+            question: "In which movie does Leonardo DiCaprio play Jack?",
+            options: ["Avatar", "Titanic", "The Matrix", "Frozen"],
             correct: 1,
             category: "Hollywood"
         },
         {
-            question: "Which movie is about a fish trying to find his son?",
-            options: ["Finding Nemo", "Shark Tale", "The Little Mermaid", "Moana"],
-            correct: 0,
-            category: "Animation"
-        },
-        {
-            question: "Which movie features the character Simba?",
-            options: ["The Jungle Book", "The Lion King", "Madagascar", "Zootopia"],
+            question: "Which animated movie features the song 'Let It Go'?",
+            options: ["Moana", "Frozen", "Tangled", "The Lion King"],
             correct: 1,
             category: "Animation"
         },
         {
-            question: "Who played Iron Man in the Marvel movies?",
-            options: ["Chris Evans", "Chris Hemsworth", "Robert Downey Jr.", "Mark Ruffalo"],
+            question: "Who plays the main character in the Fast & Furious movies?",
+            options: ["The Rock", "Jason Statham", "Vin Diesel", "Paul Walker"],
             correct: 2,
             category: "Hollywood"
         },
         {
-            question: "Which Bollywood actor is known as the 'King of Bollywood'?",
-            options: ["Aamir Khan", "Salman Khan", "Shah Rukh Khan", "Akshay Kumar"],
+            question: "Which movie features a blue alien race called Na'vi?",
+            options: ["Star Wars", "Avatar", "Guardians of the Galaxy", "Star Trek"],
+            correct: 1,
+            category: "Hollywood"
+        },
+        {
+            question: "In which Bollywood movie does Shah Rukh Khan say 'Rahul, naam toh suna hoga'?",
+            options: ["Dilwale Dulhania Le Jayenge", "Kuch Kuch Hota Hai", "Kabhi Khushi Kabhie Gham", "My Name is Khan"],
             correct: 2,
             category: "Bollywood"
         },
         {
-            question: "In which Bollywood movie did Shah Rukh Khan play a character named Raj?",
-            options: ["Dilwale Dulhania Le Jayenge", "Kuch Kuch Hota Hai", "Don", "Both A and B"],
-            correct: 3,
+            question: "Which recent movie features the song 'Naatu Naatu'?",
+            options: ["Baahubali", "RRR", "KGF", "Pushpa"],
+            correct: 1,
             category: "Bollywood"
         },
         {
-            question: "Which movie features the song 'Jai Ho'?",
-            options: ["3 Idiots", "Slumdog Millionaire", "Dangal", "Lagaan"],
+            question: "Who plays Spider-Man in the most recent Spider-Man movies?",
+            options: ["Tobey Maguire", "Andrew Garfield", "Tom Holland", "Miles Morales"],
+            correct: 2,
+            category: "Hollywood"
+        },
+        {
+            question: "Which movie features the character Elsa?",
+            options: ["Moana", "Brave", "Frozen", "Encanto"],
+            correct: 2,
+            category: "Animation"
+        },
+        {
+            question: "In which movie does Aamir Khan play the role of an alien?",
+            options: ["3 Idiots", "PK", "Dangal", "Lagaan"],
             correct: 1,
             category: "Bollywood"
+        },
+        {
+            question: "Which movie series features a character named Dominic Toretto?",
+            options: ["Mission Impossible", "Fast & Furious", "John Wick", "The Expendables"],
+            correct: 1,
+            category: "Hollywood"
+        },
+        {
+            question: "Who directed the movie 'Avengers: Endgame'?",
+            options: ["Joss Whedon", "Kevin Feige", "Russo Brothers", "Jon Favreau"],
+            correct: 2,
+            category: "Hollywood"
         }
     ],
     medium: [
         {
-            question: "Who directed the movie 'Inception'?",
-            options: ["Steven Spielberg", "Christopher Nolan", "Martin Scorsese", "Quentin Tarantino"],
+            question: "Which movie won the Academy Award for Best Picture in 2022?",
+            options: ["Dune", "CODA", "Belfast", "West Side Story"],
             correct: 1,
             category: "Hollywood"
         },
         {
-            question: "Which movie won the Academy Award for Best Picture in 2020?",
-            options: ["1917", "Joker", "Parasite", "Once Upon a Time in Hollywood"],
-            correct: 2,
-            category: "Hollywood"
-        },
-        {
-            question: "In 'The Dark Knight', who played the Joker?",
-            options: ["Jack Nicholson", "Joaquin Phoenix", "Heath Ledger", "Mark Hamill"],
-            correct: 2,
-            category: "Hollywood"
-        },
-        {
-            question: "Who directed 'Pulp Fiction'?",
-            options: ["Martin Scorsese", "Quentin Tarantino", "David Fincher", "Steven Spielberg"],
+            question: "In 'Black Panther', what is the name of the fictional African country?",
+            options: ["Zamunda", "Wakanda", "Genovia", "Sokovia"],
             correct: 1,
             category: "Hollywood"
         },
         {
-            question: "In which movie did Aamir Khan play the role of a wrestling coach?",
-            options: ["3 Idiots", "Dangal", "Lagaan", "Taare Zameen Par"],
+            question: "Which Bollywood movie features the dialogue 'Mogambo khush hua'?",
+            options: ["Sholay", "Mr. India", "Amar Akbar Anthony", "Don"],
             correct: 1,
             category: "Bollywood"
         },
         {
-            question: "Who directed the movie 'Sholay'?",
-            options: ["Yash Chopra", "Raj Kapoor", "Ramesh Sippy", "Guru Dutt"],
+            question: "Who plays the Joker in 'The Dark Knight' (2008)?",
+            options: ["Jack Nicholson", "Joaquin Phoenix", "Heath Ledger", "Jared Leto"],
             correct: 2,
-            category: "Bollywood"
+            category: "Hollywood"
         },
         {
-            question: "In which movie did Priyanka Chopra play a boxer?",
-            options: ["Fashion", "Barfi", "Mary Kom", "The Sky Is Pink"],
-            correct: 2,
-            category: "Bollywood"
-        },
-        {
-            question: "In 'Forrest Gump', what does Forrest compare life to?",
-            options: ["A river", "A box of chocolates", "A journey", "A book"],
+            question: "Which movie features the famous line 'I'll be back'?",
+            options: ["Predator", "The Terminator", "Total Recall", "Commando"],
             correct: 1,
             category: "Hollywood"
+        },
+        {
+            question: "In which Bollywood movie does Hrithik Roshan play a superhero?",
+            options: ["Dhoom 2", "Krrish", "Bang Bang", "War"],
+            correct: 1,
+            category: "Bollywood"
+        },
+        {
+            question: "Which movie features the song 'My Heart Will Go On'?",
+            options: ["The Bodyguard", "Ghost", "Titanic", "Pretty Woman"],
+            correct: 2,
+            category: "Hollywood"
+        },
+        {
+            question: "Who plays the main character in 'John Wick'?",
+            options: ["Jason Statham", "Keanu Reeves", "Liam Neeson", "Denzel Washington"],
+            correct: 1,
+            category: "Hollywood"
+        },
+        {
+            question: "Which recent Bollywood movie is about a toilet and social awareness?",
+            options: ["Pink", "Toilet: Ek Prem Katha", "Pad Man", "Article 15"],
+            correct: 1,
+            category: "Bollywood"
+        },
+        {
+            question: "In 'The Lion King' (2019), who voices adult Simba?",
+            options: ["Donald Glover", "Michael B. Jordan", "John Boyega", "Chadwick Boseman"],
+            correct: 0,
+            category: "Animation"
+        },
+        {
+            question: "Which movie series features Ethan Hunt as the main character?",
+            options: ["James Bond", "Jason Bourne", "Mission: Impossible", "The Equalizer"],
+            correct: 2,
+            category: "Hollywood"
+        },
+        {
+            question: "Who directed 'Gully Boy' starring Ranveer Singh?",
+            options: ["Zoya Akhtar", "Anurag Kashyap", "Imtiaz Ali", "Karan Johar"],
+            correct: 0,
+            category: "Bollywood"
         }
     ],
     hard: [
         {
-            question: "Which movie features the famous quote 'Here's looking at you, kid'?",
-            options: ["Casablanca", "Gone with the Wind", "Roman Holiday", "Singin' in the Rain"],
+            question: "Which movie won the Palme d'Or at Cannes Film Festival 2023?",
+            options: ["Anatomy of a Fall", "The Zone of Interest", "Killers of the Flower Moon", "May December"],
             correct: 0,
-            category: "Classics"
+            category: "Hollywood"
         },
         {
-            question: "Which movie won the first ever Academy Award for Best Picture?",
-            options: ["Wings", "The Jazz Singer", "Sunrise", "The Circus"],
-            correct: 0,
-            category: "Classics"
-        },
-        {
-            question: "Which movie features the famous dance scene in the rain?",
-            options: ["Singin' in the Rain", "La La Land", "The Umbrella of Cherbourg", "Mamma Mia!"],
-            correct: 0,
-            category: "Classics"
-        },
-        {
-            question: "Who composed the music for 'The Lion King' (1994)?",
-            options: ["Alan Menken", "Hans Zimmer", "John Williams", "Danny Elfman"],
+            question: "Who composed the music for 'Dune' (2021)?",
+            options: ["John Williams", "Hans Zimmer", "Thomas Newman", "Danny Elfman"],
             correct: 1,
+            category: "Hollywood"
+        },
+        {
+            question: "Which Bollywood movie was India's official entry to Oscars 2023?",
+            options: ["RRR", "The Kashmir Files", "Chhello Show", "Gangubai Kathiawadi"],
+            correct: 2,
+            category: "Bollywood"
+        },
+        {
+            question: "In 'Everything Everywhere All at Once', who plays the main character Evelyn?",
+            options: ["Sandra Oh", "Michelle Yeoh", "Lucy Liu", "Gemma Chan"],
+            correct: 1,
+            category: "Hollywood"
+        },
+        {
+            question: "Which movie features the quote 'With great power comes great responsibility'?",
+            options: ["Batman Begins", "Superman", "Spider-Man", "Iron Man"],
+            correct: 2,
+            category: "Hollywood"
+        },
+        {
+            question: "Who directed the Bollywood movie 'Tumhari Sulu'?",
+            options: ["Suresh Triveni", "Aanand L. Rai", "R. Balki", "Nitesh Tiwari"],
+            correct: 0,
+            category: "Bollywood"
+        },
+        {
+            question: "Which movie won the Academy Award for Best Animated Feature in 2021?",
+            options: ["Soul", "Onward", "Over the Moon", "Wolfwalkers"],
+            correct: 0,
             category: "Animation"
         },
         {
-            question: "Which was the first Indian film to be nominated for the Academy Award for Best Foreign Language Film?",
-            options: ["Mother India", "Lagaan", "Mughal-E-Azam", "Sholay"],
+            question: "In 'Oppenheimer' (2023), who plays J. Robert Oppenheimer?",
+            options: ["Christian Bale", "Leonardo DiCaprio", "Cillian Murphy", "Oscar Isaac"],
+            correct: 2,
+            category: "Hollywood"
+        },
+        {
+            question: "Which Bollywood actress won the National Film Award for 'Queen' (2013)?",
+            options: ["Kangana Ranaut", "Deepika Padukone", "Priyanka Chopra", "Vidya Balan"],
             correct: 0,
             category: "Bollywood"
         },
         {
-            question: "Who was the first Indian to win an Academy Award?",
-            options: ["Satyajit Ray", "Bhanu Athaiya", "A.R. Rahman", "Resul Pookutty"],
+            question: "Who directed 'Parasite', the 2019 Oscar winner for Best Picture?",
+            options: ["Park Chan-wook", "Bong Joon-ho", "Kim Ki-duk", "Lee Chang-dong"],
             correct: 1,
-            category: "Bollywood"
+            category: "International"
         },
         {
-            question: "In which year was the movie 'Citizen Kane' released?",
-            options: ["1940", "1941", "1942", "1943"],
+            question: "Which movie features the song 'Shallow' performed by Lady Gaga?",
+            options: ["The Greatest Showman", "A Star Is Born", "Bohemian Rhapsody", "Rocketman"],
             correct: 1,
-            category: "Classics"
+            category: "Hollywood"
         },
         {
-            question: "Which cinematographer won the Oscar for 'Blade Runner 2049'?",
-            options: ["Roger Deakins", "Emmanuel Lubezki", "Vittorio Storaro", "Janusz Kamiński"],
-            correct: 0,
+            question: "In which year was 'Avengers: Endgame' released?",
+            options: ["2018", "2019", "2020", "2021"],
+            correct: 1,
             category: "Hollywood"
         }
     ]
