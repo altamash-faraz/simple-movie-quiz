@@ -168,6 +168,93 @@ class QuizGame {
         this.timeBonus = 0;
         this.stats = this.loadStats();
         
+        // Achievement definitions
+        this.achievements = {
+            firstGame: {
+                id: 'firstGame',
+                title: 'First Steps',
+                description: 'Complete your first quiz',
+                icon: '🎬',
+                condition: (stats) => stats.totalGames >= 1,
+                unlocked: false
+            },
+            speedDemon: {
+                id: 'speedDemon',
+                title: 'Speed Demon',
+                description: 'Get 5 time bonuses in a single game',
+                icon: '⚡',
+                condition: (stats) => stats.maxTimeBonusesInGame >= 5,
+                unlocked: false
+            },
+            perfectScore: {
+                id: 'perfectScore',
+                title: 'Perfect Score',
+                description: 'Score 100% in any difficulty',
+                icon: '🏆',
+                condition: (stats) => stats.perfectGames >= 1,
+                unlocked: false
+            },
+            easyMaster: {
+                id: 'easyMaster',
+                title: 'Easy Master',
+                description: 'Score 80+ points in Easy mode',
+                icon: '🌟',
+                condition: (stats) => stats.difficultyBest.easy >= 80,
+                unlocked: false
+            },
+            mediumMaster: {
+                id: 'mediumMaster',
+                title: 'Medium Master',
+                description: 'Score 120+ points in Medium mode',
+                icon: '🔥',
+                condition: (stats) => stats.difficultyBest.medium >= 120,
+                unlocked: false
+            },
+            hardMaster: {
+                id: 'hardMaster',
+                title: 'Hard Master',
+                description: 'Score 200+ points in Hard mode',
+                icon: '💎',
+                condition: (stats) => stats.difficultyBest.hard >= 200,
+                unlocked: false
+            },
+            movieBuff: {
+                id: 'movieBuff',
+                title: 'Movie Buff',
+                description: 'Play 10 games',
+                icon: '🍿',
+                condition: (stats) => stats.totalGames >= 10,
+                unlocked: false
+            },
+            consistent: {
+                id: 'consistent',
+                title: 'Consistent Player',
+                description: 'Maintain 70%+ accuracy over 5 games',
+                icon: '🎯',
+                condition: (stats) => stats.totalGames >= 5 && 
+                    (stats.correctAnswers / stats.totalQuestions) >= 0.7,
+                unlocked: false
+            },
+            scholar: {
+                id: 'scholar',
+                title: 'Movie Scholar',
+                description: 'Answer 100 questions correctly',
+                icon: '📚',
+                condition: (stats) => stats.correctAnswers >= 100,
+                unlocked: false
+            },
+            dedication: {
+                id: 'dedication',
+                title: 'Dedicated Fan',
+                description: 'Play 25 games',
+                icon: '🏅',
+                condition: (stats) => stats.totalGames >= 25,
+                unlocked: false
+            }
+        };
+        
+        this.currentGameTimeBonuses = 0;
+        
         this.difficultySettings = {
             easy: { points: 10, timeLimit: 45, multiplier: 1 },
             medium: { points: 15, timeLimit: 30, multiplier: 1.5 },
@@ -180,6 +267,8 @@ class QuizGame {
     init() {
         this.updateStatsDisplay();
         this.setDifficulty('medium');
+        this.checkAchievements(); // Initialize achievements
+        this.updateAchievementsDisplay();
     }
     
     // Statistics Management
@@ -191,7 +280,10 @@ class QuizGame {
             totalQuestions: 0,
             correctAnswers: 0,
             difficultyBest: { easy: 0, medium: 0, hard: 0 },
-            difficultyGames: { easy: 0, medium: 0, hard: 0 }
+            difficultyGames: { easy: 0, medium: 0, hard: 0 },
+            perfectGames: 0,
+            maxTimeBonusesInGame: 0,
+            unlockedAchievements: []
         };
         
         try {
@@ -199,6 +291,151 @@ class QuizGame {
             return saved ? { ...defaultStats, ...JSON.parse(saved) } : defaultStats;
         } catch (e) {
             return defaultStats;
+        }
+    }
+    
+    checkAchievements() {
+        const newlyUnlocked = [];
+        
+        Object.values(this.achievements).forEach(achievement => {
+            const wasUnlocked = this.stats.unlockedAchievements.includes(achievement.id);
+            const isNowUnlocked = achievement.condition(this.stats);
+            
+            if (isNowUnlocked && !wasUnlocked) {
+                this.stats.unlockedAchievements.push(achievement.id);
+                newlyUnlocked.push(achievement);
+            }
+        });
+        
+        // Show notifications for newly unlocked achievements
+        newlyUnlocked.forEach((achievement, index) => {
+            setTimeout(() => {
+                this.showAchievementNotification(achievement);
+            }, index * 1000);
+        });
+        
+        return newlyUnlocked;
+    }
+    
+    showAchievementNotification(achievement) {
+        const notification = document.createElement('div');
+        notification.className = 'achievement-notification';
+        notification.innerHTML = `
+            <div class="achievement-notification-content">
+                <span class="achievement-notification-icon">${achievement.icon}</span>
+                <div>
+                    <div class="achievement-notification-title">Achievement Unlocked!</div>
+                    <div class="achievement-notification-name">${achievement.title}</div>
+                </div>
+            </div>
+        `;
+        
+        notification.style.cssText = `
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 15px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            z-index: 1001;
+            animation: achievementSlideIn 0.8s ease-out;
+            border: 2px solid #4ecdc4;
+        `;
+        
+        document.body.appendChild(notification);
+        
+        setTimeout(() => {
+            notification.style.animation = 'achievementSlideOut 0.8s ease-out';
+            setTimeout(() => notification.remove(), 800);
+        }, 4000);
+        
+        // Add CSS if not exists
+        if (!document.getElementById('achievement-notification-styles')) {
+            const style = document.createElement('style');
+            style.id = 'achievement-notification-styles';
+            style.textContent = `
+                @keyframes achievementSlideIn {
+                    from { transform: translateX(-50%) translateY(-100px); opacity: 0; }
+                    to { transform: translateX(-50%) translateY(0); opacity: 1; }
+                }
+                @keyframes achievementSlideOut {
+                    from { transform: translateX(-50%) translateY(0); opacity: 1; }
+                    to { transform: translateX(-50%) translateY(-100px); opacity: 0; }
+                }
+                .achievement-notification-content {
+                    display: flex;
+                    align-items: center;
+                    gap: 1rem;
+                }
+                .achievement-notification-icon {
+                    font-size: 2rem;
+                }
+                .achievement-notification-title {
+                    font-size: 0.9rem;
+                    opacity: 0.9;
+                }
+                .achievement-notification-name {
+                    font-size: 1.1rem;
+                    font-weight: bold;
+                }
+            `;
+            document.head.appendChild(style);
+        }
+    }
+    
+    updateAchievementsDisplay() {
+        const container = document.getElementById('achievements-container');
+        if (!container) return;
+        
+        container.innerHTML = '';
+        
+        Object.values(this.achievements).forEach(achievement => {
+            const isUnlocked = this.stats.unlockedAchievements.includes(achievement.id);
+            const progress = this.getAchievementProgress(achievement);
+            
+            const achievementElement = document.createElement('div');
+            achievementElement.className = `achievement ${isUnlocked ? 'unlocked' : 'locked'}`;
+            
+            achievementElement.innerHTML = `
+                <span class="achievement-icon">${achievement.icon}</span>
+                <div class="achievement-title">${achievement.title}</div>
+                <div class="achievement-desc">${achievement.description}</div>
+                ${!isUnlocked && progress < 100 ? `
+                    <div class="achievement-progress">
+                        <div class="achievement-progress-bar" style="width: ${progress}%"></div>
+                    </div>
+                    <div style="font-size: 0.8rem; opacity: 0.7; margin-top: 0.5rem;">
+                        Progress: ${Math.round(progress)}%
+                    </div>
+                ` : ''}
+                ${isUnlocked ? '<div style="color: #4ecdc4; font-weight: bold; margin-top: 0.5rem;">✓ UNLOCKED</div>' : ''}
+            `;
+            
+            container.appendChild(achievementElement);
+        });
+    }
+    
+    getAchievementProgress(achievement) {
+        const stats = this.stats;
+        
+        switch(achievement.id) {
+            case 'firstGame': return Math.min(100, (stats.totalGames / 1) * 100);
+            case 'speedDemon': return Math.min(100, (stats.maxTimeBonusesInGame / 5) * 100);
+            case 'perfectScore': return Math.min(100, (stats.perfectGames / 1) * 100);
+            case 'easyMaster': return Math.min(100, (stats.difficultyBest.easy / 80) * 100);
+            case 'mediumMaster': return Math.min(100, (stats.difficultyBest.medium / 120) * 100);
+            case 'hardMaster': return Math.min(100, (stats.difficultyBest.hard / 200) * 100);
+            case 'movieBuff': return Math.min(100, (stats.totalGames / 10) * 100);
+            case 'consistent': 
+                if (stats.totalGames < 5) return (stats.totalGames / 5) * 50;
+                const accuracy = stats.totalQuestions > 0 ? stats.correctAnswers / stats.totalQuestions : 0;
+                return Math.min(100, (accuracy / 0.7) * 100);
+            case 'scholar': return Math.min(100, (stats.correctAnswers / 100) * 100);
+            case 'dedication': return Math.min(100, (stats.totalGames / 25) * 100);
+            default: return 0;
         }
     }
     
@@ -217,6 +454,17 @@ class QuizGame {
         this.stats.correctAnswers += this.userAnswers.filter((answer, index) => 
             answer === this.selectedQuestions[index].correct).length;
         
+        // Track perfect games
+        const maxScore = this.difficultySettings[this.difficulty].points * 10;
+        if (this.score === maxScore) {
+            this.stats.perfectGames++;
+        }
+        
+        // Track max time bonuses in a single game
+        if (this.currentGameTimeBonuses > this.stats.maxTimeBonusesInGame) {
+            this.stats.maxTimeBonusesInGame = this.currentGameTimeBonuses;
+        }
+        
         if (this.score > this.stats.bestScore) {
             this.stats.bestScore = this.score;
         }
@@ -228,6 +476,9 @@ class QuizGame {
         this.stats.difficultyGames[this.difficulty]++;
         this.saveStats();
         this.updateStatsDisplay();
+        
+        // Check for newly unlocked achievements
+        this.checkAchievements();
     }
     
     updateStatsDisplay() {
@@ -310,6 +561,7 @@ class QuizGame {
         this.score = 0;
         this.userAnswers = [];
         this.timeBonus = 0;
+        this.currentGameTimeBonuses = 0;
         
         // Get questions for selected difficulty
         const availableQuestions = movieQuestions[this.difficulty];
@@ -358,12 +610,14 @@ class QuizGame {
         // Disable all options
         options.forEach(option => option.disabled = true);
         
-        // Highlight correct and selected answers
+        // Highlight correct and selected answers with animations
         options.forEach((option, index) => {
             if (index === question.correct) {
+                option.classList.add('correct');
                 option.style.background = '#4ecdc4';
                 option.style.color = 'white';
             } else if (index === selectedIndex && selectedIndex !== question.correct) {
+                option.classList.add('wrong');
                 option.style.background = '#ff6b6b';
                 option.style.color = 'white';
             }
@@ -377,13 +631,22 @@ class QuizGame {
             if (this.timeLeft > settings.timeLimit * 0.8) {
                 points += Math.round(settings.points * 0.5); // 50% bonus
                 this.timeBonus += Math.round(settings.points * 0.5);
+                this.currentGameTimeBonuses++;
+                this.showNotification('⚡ Speed Bonus!', 'bonus');
             } else if (this.timeLeft > settings.timeLimit * 0.5) {
                 points += Math.round(settings.points * 0.2); // 20% bonus
                 this.timeBonus += Math.round(settings.points * 0.2);
+                this.currentGameTimeBonuses++;
+                this.showNotification('⏰ Time Bonus!', 'bonus');
             }
             
             this.score += points;
             this.updateScore();
+            this.showNotification('✅ Correct!', 'success');
+        } else if (selectedIndex !== -1) {
+            this.showNotification('❌ Wrong answer', 'error');
+        } else {
+            this.showNotification('⏰ Time\'s up!', 'warning');
         }
         
         this.userAnswers.push(selectedIndex);
@@ -393,6 +656,61 @@ class QuizGame {
             document.getElementById('next-btn').style.display = 'inline-block';
         } else {
             setTimeout(() => this.finishQuiz(), 1500);
+        }
+    }
+    
+    showNotification(message, type) {
+        // Create notification element
+        const notification = document.createElement('div');
+        notification.className = `notification notification-${type}`;
+        notification.textContent = message;
+        
+        // Add styles
+        notification.style.cssText = `
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 1rem 1.5rem;
+            border-radius: 10px;
+            color: white;
+            font-weight: bold;
+            z-index: 1000;
+            animation: slideInRight 0.5s ease-out;
+        `;
+        
+        // Set background color based on type
+        const colors = {
+            success: '#4ecdc4',
+            error: '#ff6b6b',
+            warning: '#ffa726',
+            bonus: '#9c27b0'
+        };
+        notification.style.background = colors[type] || '#666';
+        
+        // Add to document
+        document.body.appendChild(notification);
+        
+        // Remove after 3 seconds
+        setTimeout(() => {
+            notification.style.animation = 'slideOutRight 0.5s ease-out';
+            setTimeout(() => notification.remove(), 500);
+        }, 2500);
+        
+        // Add CSS for slide animations if not exists
+        if (!document.getElementById('notification-styles')) {
+            const style = document.createElement('style');
+            style.id = 'notification-styles';
+            style.textContent = `
+                @keyframes slideInRight {
+                    from { transform: translateX(100%); opacity: 0; }
+                    to { transform: translateX(0); opacity: 1; }
+                }
+                @keyframes slideOutRight {
+                    from { transform: translateX(0); opacity: 1; }
+                    to { transform: translateX(100%); opacity: 0; }
+                }
+            `;
+            document.head.appendChild(style);
         }
     }
     
@@ -408,7 +726,14 @@ class QuizGame {
     }
     
     updateScore() {
-        document.getElementById('current-score').textContent = this.score;
+        const scoreElement = document.getElementById('current-score');
+        scoreElement.textContent = this.score;
+        
+        // Add animation class
+        scoreElement.parentElement.classList.add('animate');
+        setTimeout(() => {
+            scoreElement.parentElement.classList.remove('animate');
+        }, 500);
     }
     
     updateProgress() {
@@ -460,10 +785,15 @@ class QuizGame {
     
     // Screen Management
     showScreen(screenId) {
-        const screens = ['start-screen', 'instructions', 'stats-screen', 'quiz-area', 'result-screen'];
+        const screens = ['start-screen', 'instructions', 'stats-screen', 'achievements-screen', 'quiz-area', 'result-screen'];
         screens.forEach(id => {
             document.getElementById(id).style.display = id === screenId ? 'block' : 'none';
         });
+        
+        // Update achievements display when showing achievements screen
+        if (screenId === 'achievements-screen') {
+            this.updateAchievementsDisplay();
+        }
     }
 }
 
@@ -485,6 +815,10 @@ function showInstructions() {
 
 function showStats() {
     game.showScreen('stats-screen');
+}
+
+function showAchievements() {
+    game.showScreen('achievements-screen');
 }
 
 function setDifficulty(level) {
