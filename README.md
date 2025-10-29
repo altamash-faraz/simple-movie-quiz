@@ -21,13 +21,7 @@ A sophisticated, feature-rich movie quiz game with difficulty levels, achievemen
 - Beautiful notification animations
 - Persistent achievement storage
 - Special challenges: Speed Demon, Perfect Score, Movie Scholar
-
-### 📊 Advanced Statistics
-- **Comprehensive tracking**: Games played, best scores, accuracy
-- **Performance by difficulty**: Track your progress in each mode
-- **Persistent data**: Your stats are saved locally
-- **Achievement progress**: See how close you are to unlocking rewards
-
+- 
 ### 🎨 Enhanced User Experience
 - **Smooth animations**: Fade-in questions, slide transitions, bounce effects
 - **Visual feedback**: Animated correct/wrong answers
